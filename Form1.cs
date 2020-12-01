@@ -8,38 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections;
 
 namespace Rood__Letterfrequentie
 {
 
     public partial class Form1 : Form
     {
-        int scoreA;
-        int scoreB;
-        int scoreC;
-        int scoreD;
-        int scoreE;
-        int scoreF;
-        int scoreG;
-        int scoreH;
-        int scoreI;
-        int scoreJ;
-        int scoreK;
-        int scoreL;
-        int scoreM;
-        int scoreN;
-        int scoreO;
-        int scoreP;
-        int scoreQ;
-        int scoreR;
-        int scoreS;
-        int scoreT;
-        int scoreU;
-        int scoreV;
-        int scoreW;
-        int scoreX;
-        int scoreY;
-        int scoreZ;
 
         public Form1()
         {
@@ -53,8 +28,47 @@ namespace Rood__Letterfrequentie
             openFileDialog1.ShowDialog();
             textBox1.Text = openFileDialog1.FileName;
 
-            string[] FileInfo = File.ReadAllLines(textBox1.Text);
+            int[] ArrayInt = new int[(int)char.MaxValue];
 
+            string FileInfo = File.ReadAllText(textBox1.Text);
+            
+            foreach (char L in FileInfo)
+            {
+                ArrayInt[(int)L]++;
+            }
+
+            for (int i = 0; i < (int)char.MaxValue ; i++)
+            {
+                if (ArrayInt[i] > 0)
+                {
+                    string CharValueInfo = string.Format("Character: {0}            Amount: {1}", (char)i, ArrayInt[i]).ToString();
+                    richTextBox1.Text += CharValueInfo + "\r\n";
+
+                }
+            }
+            
+            /*
+            Dictionary<char, int> occurences = new Dictionary<char, int>();
+            char[] aL = FileInfo.ToCharArray();
+
+            foreach (char c in aL)
+            {
+                if (!occurences.ContainsKey(c))
+                {
+                    occurences.Add(c, 1);
+                }
+                else
+                {
+                    occurences[c]++;
+                }
+
+            }
+
+            richTextBox1.Text = string.Format("Key = {0}, Value = {1}",occurences.Keys, occurences.Values).ToString();
+            */
+
+            //richTextBox1.Text = occurences.Values.SelectMany(c => occurences.Values).Distinct().Count().ToString();
+            /*
             foreach (string letter in FileInfo)
             {
                 string SmallLetter = letter.ToLower();
@@ -141,73 +155,24 @@ namespace Rood__Letterfrequentie
                     case " ":
                         break;
                 }
-            }
+            }*/
             RefreshScore();
         }
 
         private void CountToZero()
         {
-            scoreA = 0;
-            scoreB = 0;
-            scoreC = 0;
-            scoreD = 0;
-            scoreE = 0;
-            scoreF = 0;
-            scoreG = 0;
-            scoreH = 0;
-            scoreI = 0;
-            scoreJ = 0;
-            scoreK = 0;
-            scoreL = 0;
-            scoreM = 0;
-            scoreN = 0;
-            scoreO = 0;
-            scoreP = 0;
-            scoreQ = 0;
-            scoreR = 0;
-            scoreS = 0;
-            scoreT = 0;
-            scoreU = 0;
-            scoreV = 0;
-            scoreW = 0;
-            scoreX = 0;
-            scoreY = 0;
-            scoreZ = 0;
+
         }
         private void RefreshScore()
         {
-            labelA.Text = scoreA.ToString();
-            labelB.Text = scoreB.ToString();
-            labelC.Text = scoreC.ToString();
-            labelD.Text = scoreD.ToString();
-            labelE.Text = scoreE.ToString();
-            labelF.Text = scoreF.ToString();
-            labelG.Text = scoreG.ToString();
-            labelH.Text = scoreH.ToString();
-            labelI.Text = scoreI.ToString();
-            labelJ.Text = scoreJ.ToString();
-            labelK.Text = scoreK.ToString();
-            labelL.Text = scoreL.ToString();
-            labelM.Text = scoreM.ToString();
-            labelN.Text = scoreN.ToString();
-            labelO.Text = scoreO.ToString();
-            labelP.Text = scoreP.ToString();
-            labelQ.Text = scoreQ.ToString();
-            labelR.Text = scoreR.ToString();
-            labelS.Text = scoreS.ToString();
-            labelT.Text = scoreT.ToString();
-            labelU.Text = scoreU.ToString();
-            labelV.Text = scoreV.ToString();
-            labelW.Text = scoreW.ToString();
-            labelX.Text = scoreX.ToString();
-            labelY.Text = scoreY.ToString();
-            labelZ.Text = scoreZ.ToString();
+
         }
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
             CountToZero();
+            richTextBox1.Text = "";
         }
 
         private void buttonCalculate_Click(object sender, EventArgs e)
